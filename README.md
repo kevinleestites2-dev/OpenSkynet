@@ -14,7 +14,7 @@ Teach it once. It repeats forever. 24/7.
 
 ---
 
-![Sediman Demo](demo.gif)
+<img width="1246" height="854" alt="Screenshot 2026-05-30 at 4 25 03 AM" src="https://github.com/user-attachments/assets/5ff49600-0002-42c5-b307-9ba4b0a1afef" />
 
 ---
 
