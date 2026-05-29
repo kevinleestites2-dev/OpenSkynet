@@ -149,6 +149,10 @@ class ToolRegistry:
     def __init__(self) -> None:
         self._tools: dict[str, ToolDefinition] = {}
         self._handlers: dict[str, ToolHandler] = {}
+        self._checkpoint_manager: Any | None = None
+
+    def set_checkpoint_manager(self, manager: Any) -> None:
+        self._checkpoint_manager = manager
 
     def register(
         self,
@@ -179,6 +183,11 @@ class ToolRegistry:
         if not handler:
             return ToolResult(success=False, output=f"Unknown tool: {tool_name}")
         try:
+            # ── Pre-edit checkpoint ─────────────────────────────
+            if self._checkpoint_manager is not None:
+                cwd = arguments.get("cwd") if tool_name == "terminal" else None
+                await self._checkpoint_manager.maybe_checkpoint(tool_name, arguments, cwd=cwd)
+
             result = await handler(**arguments)
             logger.info("tool_dispatched", tool=tool_name, success=result.success)
             return result
@@ -219,8 +228,6 @@ class ToolLoop:
         if system:
             all_messages.append({"role": "system", "content": system})
         all_messages.extend(messages)
-
-        tools = self.registry.get_openai_tools()
 
         for _round in range(self.max_rounds):
             InterruptSignal.get().check()

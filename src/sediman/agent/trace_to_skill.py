@@ -41,10 +41,18 @@ class TraceToSkill:
 
         user_message = self._build_user_message(session, key_frames)
 
-        messages = [
-            {"role": "system", "content": system_prompt},
-            user_message,
-        ]
+            messages = [
+                {
+                    "role": "system",
+                    "content": "You refine browser automation steps for robustness.",
+                },
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": refine_prompt},
+                    ],
+                },
+            ]
 
         try:
             response = await self.llm.chat(messages=messages, tools=[])

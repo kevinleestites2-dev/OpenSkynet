@@ -147,7 +147,44 @@ class SkillRecorder:
         return variables[:10]
 
     def _summarize_action(self, action: dict[str, Any]) -> str | None:
-        sd = StepData.from_browser_action(action)
-        if not sd.description or sd.action_type == "done":
+        action_type = action.get("action", action.get("type", ""))
+        if action_type == "done":
             return None
-        return sd.to_string()
+
+        args = action.get("arguments", action)
+        if action_type == "click":
+            idx = args.get("index", "")
+            text = args.get("text", args.get("label", ""))
+            parts = []
+            if idx:
+                parts.append(f"element {idx}")
+            if text:
+                parts.append(f'"{text}"')
+            return "Click " + " ".join(parts) if parts else None
+
+        if action_type == "input":
+            text = args.get("text", "")
+            field = args.get("selector", args.get("label", ""))
+            parts = []
+            if field:
+                parts.append(f"in {field}")
+            if text:
+                parts.append(f'"{text[:50]}"')
+            return "Type " + " ".join(parts) if parts else None
+
+        if action_type == "navigate":
+            url = args.get("url", "")
+            return f"Navigate to {url}" if url else None
+
+        if action_type == "extract":
+            return "Extract data from page"
+
+        if action_type == "scroll":
+            return "Scroll page"
+
+        if action_type == "search":
+            query = args.get("query", "")
+            return f"Search: {query}" if query else None
+
+        detail = str(action)[:100]
+        return detail if detail else None

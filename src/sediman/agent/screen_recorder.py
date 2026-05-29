@@ -259,7 +259,6 @@ class RecordingSession:
                     sampled_idle.append(idle_frames[i])
 
         result = []
-        action_idx = 0
         idle_idx = 0
         for f in self.frames:
             if id(f) in action_indices:
@@ -602,7 +601,6 @@ class ScreenRecorder:
         return events
 
     def _describe_click(self, el: dict[str, str]) -> str:
-        parts = []
         tag = el.get("tag", "").upper()
         text = el.get("text", "").strip()
         aria = el.get("aria_label", "")

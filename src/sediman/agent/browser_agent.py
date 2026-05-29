@@ -28,6 +28,7 @@ class BrowserSubagent:
         on_browser_step: Callable[[str, str], None] | None = None,
         conversation: list[dict[str, str]] | None = None,
         recording_name: str | None = None,
+        memory_context: str | None = None,
     ):
         self.browser = browser_session
         self.llm = llm_provider
@@ -37,6 +38,7 @@ class BrowserSubagent:
         self._on_browser_step = on_browser_step
         self._conversation = conversation or []
         self._recording_name = recording_name
+        self._memory_context = memory_context
 
     async def run(
         self,
@@ -45,12 +47,14 @@ class BrowserSubagent:
     ) -> BrowserResult:
         from sediman.memory.store import MemoryStore
 
-        memory_store = MemoryStore()
-        memory_context = memory_store.format_for_system_prompt()
+        memory_ctx = self._memory_context
+        if memory_ctx is None:
+            memory_store = MemoryStore()
+            memory_ctx = memory_store.format_for_system_prompt()
 
         system_prompt = self._prompt_builder.build_system_prompt(
             skill_summaries=skill_summaries,
-            memory_context=memory_context,
+            memory_context=memory_ctx,
         )
 
         if self._conversation:
