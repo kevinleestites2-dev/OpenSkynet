@@ -20,7 +20,7 @@ RESULTS_FILE = JOBS_DIR / "results.jsonl"
 MAX_RESULT_CHARS = 2000
 MAX_RESULTS_PER_JOB = 100
 
-_CRON_FIELD_RE = re.compile(r"^[\d*/,-]+$")
+_CRON_FIELD_RE = re.compile(r"^[\d*/,\-a-zA-Z]+$")
 _JOB_ID_RE = re.compile(r"^[a-f0-9]{1,12}$")
 _list_jobs_cache: dict[str, tuple[float, list[dict[str, Any]]]] = {}
 _CACHE_TTL = 30.0

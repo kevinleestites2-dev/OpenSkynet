@@ -58,7 +58,7 @@ MAX_TASK_LENGTH = 10000
 MAX_NAME_LENGTH = 64
 MAX_CRON_FIELDS = 5
 _SAFE_NAME_RE = re.compile(r"^[a-z][a-z0-9]*(-[a-z0-9]+)*$")
-_CRON_FIELD_RE = re.compile(r"^[\d*/,-]+$")
+_CRON_FIELD_RE = re.compile(r"^[\d*/,\-a-zA-Z]+$")
 
 _scheduler: Any = None
 _task_store: dict[str, dict[str, Any]] = {}
