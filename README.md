@@ -20,22 +20,42 @@ Teach it once. It repeats forever. 24/7.
 
 ## Install
 
+### Quick install (recommended)
+
 ```bash
 curl -fsSL https://get.sediman.ai | bash
 ```
 
-<details>
-<summary>Alternative methods</summary>
+The installer uses `uv` to install directly from GitHub — no PyPI needed.
+
+### From GitHub
 
 ```bash
-# pip
-pip install sediman-browse
+# Install the latest from main
+uv tool install git+https://github.com/sediman-agent/sediman-agent.git
 
-# or from source
-git clone https://github.com/sediman-agent/sediman-browse.git
-cd sediman-browse && uv sync
+# Or a specific branch/tag
+uv tool install git+https://github.com/sediman-agent/sediman-agent.git@main
 ```
-</details>
+
+### From source
+
+```bash
+git clone https://github.com/sediman-agent/sediman-agent.git
+cd sediman-agent
+uv tool install --force .
+
+# OR for development
+uv sync
+uv run sediman --help
+```
+
+### Install script options
+
+```bash
+curl -fsSL https://get.sediman.ai | bash -s -- --branch feat/some-branch
+curl -fsSL https://get.sediman.ai | bash -s -- --from-source --force
+```
 
 Then:
 
