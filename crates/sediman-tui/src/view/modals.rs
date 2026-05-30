@@ -668,8 +668,8 @@ pub fn render_skill_browser(buf: &mut CellBuffer, area: Rect, app: &mut App) {
     } else {
         let scroll = app.skill_browser_scroll as usize;
         let visible_items: Vec<_> = filtered.iter().skip(scroll).collect();
-        let mut row_y = y;
-        for &(orig_idx, skill) in visible_items.iter() {
+        for (row_idx, &(orig_idx, skill)) in visible_items.iter().enumerate() {
+            let row_y = y + row_idx as u16;
             if row_y >= max_y {
                 break;
             }
@@ -701,7 +701,6 @@ pub fn render_skill_browser(buf: &mut CellBuffer, area: Rect, app: &mut App) {
                 };
                 buf.draw_str(inner_x, row_y, &format!("  {}{}", name_display, badge), name_style);
             }
-            row_y += 1;
         }
 
         let sep_y = desc_area_y;

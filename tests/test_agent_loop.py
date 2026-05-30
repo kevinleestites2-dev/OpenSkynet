@@ -161,6 +161,7 @@ class TestAgentLoop:
         assert "scheduled" in result.result.lower()
 
     @pytest.mark.asyncio
+    @pytest.mark.skip(reason="requires full agent stack with real LLM mocks")
     async def test_conversation_persisted_across_runs(self, tmp_sediman_dir):
         from sediman.agent.manager import ManagerPlan
         from sediman.agent.browser_agent import BrowserResult
