@@ -207,19 +207,6 @@ OPENAI_API_KEY=sk-... bun run tui --provider openai --model gpt-4o
 
 ---
 
-## Coming Soon: Sediman Cloud
-
-**Don't want to manage your own server?** We're building Sediman Cloud — fully managed hosting with:
-
-- Instant browser sessions — no infrastructure to maintain
-- Always-on automation — 24/7 uptime without your machine running
-- Enterprise-grade security — isolated containers, no data leakage
-- Dashboard & monitoring — track your automations at a glance
-- One-click deploy — turn any skill into a hosted service
-
-Join the waitlist at **[sediman.ai](https://sediman.ai)** and get early access pricing.
-
----
 
 ## License
 
