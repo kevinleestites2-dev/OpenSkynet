@@ -219,20 +219,17 @@ async fn main() {
     }
 
     // Fetch available models
-    match app_state.bridge.list_models(None).await {
-        Ok(models) => {
-            let current = format!("{}/{}", app_state.provider, app_state.model.as_deref().unwrap_or("default"));
-            app_state.model_list = models.into_iter().map(|m| {
-                let is_current = m.id == current;
-                app::ModelEntry {
-                    id: m.id,
-                    name: m.name,
-                    provider: m.provider,
-                    is_current,
-                }
-            }).collect();
-        }
-        Err(_) => {}
+    if let Ok(models) = app_state.bridge.list_models(None).await {
+        let current = format!("{}/{}", app_state.provider, app_state.model.as_deref().unwrap_or("default"));
+        app_state.model_list = models.into_iter().map(|m| {
+            let is_current = m.id == current;
+            app::ModelEntry {
+                id: m.id,
+                name: m.name,
+                provider: m.provider,
+                is_current,
+            }
+        }).collect();
     }
 
     // Apply saved theme

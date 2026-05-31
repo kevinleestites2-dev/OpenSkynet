@@ -5,6 +5,7 @@ use tokio::sync::mpsc;
 use sediman_tui_bridge::ApiClient;
 
 #[derive(Clone, Debug)]
+#[allow(dead_code)]
 pub struct ModelEntry {
     pub id: String,
     pub name: String,
@@ -139,6 +140,7 @@ pub struct App {
     pub api_key_input: String,
     pub provider_filter: String,
     pub model_list: Vec<ModelEntry>,
+    #[allow(dead_code)]
     pub model_filter: String,
     // Memory editor state
     pub memory_entries: Vec<(String, String)>, // (target, content)
@@ -161,10 +163,12 @@ pub struct App {
 }
 
 #[derive(Clone, Debug)]
+#[allow(dead_code)]
 pub enum ChatMessage {
     User {
         text: String,
         task_num: usize,
+        #[allow(dead_code)]
         timestamp: Instant,
     },
     Agent {
@@ -174,14 +178,17 @@ pub enum ChatMessage {
         elapsed_secs: u64,
         skill_created: Option<String>,
         scheduled_job: Option<String>,
+        #[allow(dead_code)]
         timestamp: Instant,
     },
     System {
         text: String,
+        #[allow(dead_code)]
         timestamp: Instant,
     },
     Error {
         text: String,
+        #[allow(dead_code)]
         timestamp: Instant,
     },
 }

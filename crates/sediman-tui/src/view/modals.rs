@@ -409,6 +409,7 @@ fn render_provider_list(buf: &mut CellBuffer, area: Rect, app: &App, title: &str
         ("local", "Local / Self-hosted"),
     ];
 
+    #[allow(clippy::type_complexity)]
     let mut categories: Vec<(&str, Vec<(&str, bool, bool)>)> = Vec::new();
     let mut total_items = 0usize;
     for (cat_key, cat_label) in cat_order {
@@ -449,7 +450,7 @@ fn render_provider_list(buf: &mut CellBuffer, area: Rect, app: &App, title: &str
         buf.draw_str(inner_x + 2, y, "Search providers...", Style::new().fg(t.text_muted).bg(input_bg));
         buf.put_char(inner_x + 2, y, '\u{2588}', Style::new().fg(t.primary).bg(input_bg));
     } else {
-        let display: String = app.provider_filter.chars().take(frame.inner_w.saturating_sub(4) as usize).collect();
+        let display: String = app.provider_filter.chars().take(frame.inner_w.saturating_sub(4)).collect();
         buf.draw_str(inner_x + 2, y, &display, Style::new().fg(t.text).bg(input_bg));
         let cx = inner_x + 2 + display_width(&display);
         if cx < frame.modal.right() - 2 {
